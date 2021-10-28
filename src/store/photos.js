@@ -46,7 +46,7 @@ export const selectPhotos = () =>
     (photos) => photos.list
   );
 
-export const selectAlbums = () =>
+export const selectAlbumIds = () =>
   createSelector(
     (state) => state.entities.photos.list,
     (photos) => {
@@ -57,4 +57,10 @@ export const selectAlbums = () =>
       }
       return albums;
     }
+  );
+
+export const selectPhotosByAlbum = (albumId) =>
+  createSelector(
+    (state) => state.entities.photos.list,
+    (photos) => photos.filter((photo) => photo.albumId === albumId)
   );
