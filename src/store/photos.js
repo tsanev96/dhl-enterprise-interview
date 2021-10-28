@@ -45,3 +45,16 @@ export const selectPhotos = () =>
     (state) => state.entities.photos,
     (photos) => photos.list
   );
+
+export const selectAlbums = () =>
+  createSelector(
+    (state) => state.entities.photos.list,
+    (photos) => {
+      let albums = [];
+      for (let i = 0; i < photos.length; i++) {
+        const albumId = photos[i].albumId;
+        if (!albums.includes(albumId)) albums.push(albumId);
+      }
+      return albums;
+    }
+  );
