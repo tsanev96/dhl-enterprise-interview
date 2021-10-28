@@ -1,7 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
+import { Albums } from "./components/Albums";
 import configureStore from "./store/configureStore";
-import { Albums } from "./components/Albums/Albums";
 
 const store = configureStore();
 
