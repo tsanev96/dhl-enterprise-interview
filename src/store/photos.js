@@ -8,7 +8,6 @@ const slice = createSlice({
   name: "photos",
   initialState: {
     list: [],
-    favourites: [],
     loading: false,
     lastFetch: null,
   },
@@ -17,17 +16,20 @@ const slice = createSlice({
       photos.loading = true;
     },
     photosReceived: (photos, action) => {
-      photos.list = action.payload;
+      photos.list = action.payload.map((el) => ({ ...el, isLiked: false }));
       photos.loading = false;
     },
     photosRequestedFailed: (photos, action) => {
       photos.loading = false;
     },
-    photosAddFavourite: (photos, action) => {
+    photosToggleLiked: (photos, action) => {
       const index = photos.list.findIndex(
         (photo) => photo.id === action.payload.id
       );
-      if (index >= 0) photos.favourites.push(photos.list[index]);
+      if (index >= 0) {
+        const isLiked = photos.list[index].isLiked;
+        photos.list[index].isLiked = !isLiked;
+      }
     },
   },
 });
@@ -36,7 +38,7 @@ const {
   photosReceived,
   photosRequested,
   photosRequestedFailed,
-  photosAddFavourite,
+  photosToggleLiked: photosAddFavourite,
 } = slice.actions;
 
 export const photosReducer = slice.reducer;

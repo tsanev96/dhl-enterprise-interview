@@ -68,6 +68,7 @@ export const AlbumPhotos = () => {
                   >
                     fav
                   </Button>
+                  {photo.isLiked && "liked"}
                 </CardActions>
               </Card>
             ))}
