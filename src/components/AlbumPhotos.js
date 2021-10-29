@@ -11,7 +11,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { loadPhotos, selectAlbums } from "../store/photos";
+import { addFavouritePhoto, loadPhotos, selectAlbums } from "../store/photos";
 
 export const AlbumPhotos = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,10 @@ export const AlbumPhotos = () => {
     (album) => album.id === paramsAlbumId
   );
   const photos = currentAlbumIndex >= 0 ? albums[currentAlbumIndex].photos : [];
-  console.log(photos);
+
+  const handleAddFavouritePhoto = (photoId) =>
+    dispatch(addFavouritePhoto(photoId));
+
   useEffect(() => {
     dispatch(loadPhotos());
   }, []);
@@ -58,7 +61,11 @@ export const AlbumPhotos = () => {
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                  <Button size="small" color="primary">
+                  <Button
+                    onClick={() => handleAddFavouritePhoto(photo.id)}
+                    size="small"
+                    color="primary"
+                  >
                     fav
                   </Button>
                 </CardActions>

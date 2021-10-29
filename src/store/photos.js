@@ -8,6 +8,7 @@ const slice = createSlice({
   name: "photos",
   initialState: {
     list: [],
+    favourites: [],
     loading: false,
     lastFetch: null,
   },
@@ -22,11 +23,21 @@ const slice = createSlice({
     photosRequestedFailed: (photos, action) => {
       photos.loading = false;
     },
+    photosAddFavourite: (photos, action) => {
+      const index = photos.list.findIndex(
+        (photo) => photo.id === action.payload.id
+      );
+      if (index >= 0) photos.favourites.push(photos.list[index]);
+    },
   },
 });
 
-const { photosReceived, photosRequested, photosRequestedFailed } =
-  slice.actions;
+const {
+  photosReceived,
+  photosRequested,
+  photosRequestedFailed,
+  photosAddFavourite,
+} = slice.actions;
 
 export const photosReducer = slice.reducer;
 
@@ -40,6 +51,16 @@ export const loadPhotos = () => (dispatch, getState) =>
     })
   );
 
+/* Action Creators */
+export const addFavouritePhoto = (photoId) => (dispatch, getState) => {
+  dispatch(
+    photosAddFavourite({
+      id: photoId,
+    })
+  );
+};
+
+/*  Selectors */
 export const selectPhotos = () =>
   createSelector(
     (state) => state.entities.photos,
