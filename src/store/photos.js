@@ -100,3 +100,9 @@ export const selectPhotosByAlbum = (albumId) =>
     (state) => state.entities.photos.list,
     (photos) => photos.filter((photo) => photo.albumId === albumId)
   );
+
+export const selectFavouritePhotos = () =>
+  createSelector(
+    (state) => state.entities.photos.list,
+    (photos) => photos.filter((photo) => photo.isLiked)
+  );

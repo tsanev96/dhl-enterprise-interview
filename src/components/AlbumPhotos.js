@@ -34,7 +34,7 @@ export const AlbumPhotos = () => {
           <div>Album: {paramsAlbumId}</div>
           <div className="photos-container">
             {photos.map((photo) => (
-              <CardPhoto photo={photo} />
+              <CardPhoto key={photo.id} photo={photo} />
             ))}
           </div>
         </Grid>
