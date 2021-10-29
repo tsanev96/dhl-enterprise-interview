@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { loadPhotos, selectAlbums } from "../store/photos";
 import { CardPhoto } from "./CardPhoto";
+import { GoBackButton } from "./common/GoBackButton";
 
 export const AlbumPhotos = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ export const AlbumPhotos = () => {
 
   return (
     <>
+      <GoBackButton />
       {photos.length ? (
         <Grid
           container
