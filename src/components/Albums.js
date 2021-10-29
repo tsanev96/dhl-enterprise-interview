@@ -8,10 +8,10 @@ export const Albums = () => {
 
   const albums = useSelector(selectAlbums());
 
-  console.log(albums);
   useEffect(() => {
     dispatch(loadPhotos());
   }, []);
+
   return (
     <Grid container spacing={2}>
       {albums.map((album) => (
