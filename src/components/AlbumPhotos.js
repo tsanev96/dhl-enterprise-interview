@@ -1,17 +1,9 @@
-import {
-  Button,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { addFavouritePhoto, loadPhotos, selectAlbums } from "../store/photos";
+import { loadPhotos, selectAlbums } from "../store/photos";
+import { CardPhoto } from "./CardPhoto";
 
 export const AlbumPhotos = () => {
   const dispatch = useDispatch();
@@ -25,9 +17,6 @@ export const AlbumPhotos = () => {
     (album) => album.id === paramsAlbumId
   );
   const photos = currentAlbumIndex >= 0 ? albums[currentAlbumIndex].photos : [];
-
-  const handleAddFavouritePhoto = (photoId) =>
-    dispatch(addFavouritePhoto(photoId));
 
   useEffect(() => {
     dispatch(loadPhotos());
@@ -43,36 +32,11 @@ export const AlbumPhotos = () => {
           alignItems="center"
         >
           <div>Album: {paramsAlbumId}</div>
-          <>
+          <div className="photos-container">
             {photos.map((photo) => (
-              // <img key={photo.id} src={photo.url} alt={photo.id} />
-              <Card key={photo.id} sx={{ maxWidth: 345 }}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={photo.url}
-                    alt="green iguana"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {photo.title}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions>
-                  <Button
-                    onClick={() => handleAddFavouritePhoto(photo.id)}
-                    size="small"
-                    color="primary"
-                  >
-                    fav
-                  </Button>
-                  {photo.isLiked && "liked"}
-                </CardActions>
-              </Card>
+              <CardPhoto photo={photo} />
             ))}
-          </>
+          </div>
         </Grid>
       ) : (
         <div>This album does not exist</div>
