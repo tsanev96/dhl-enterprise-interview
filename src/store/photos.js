@@ -46,14 +46,27 @@ export const selectPhotos = () =>
     (photos) => photos.list
   );
 
-export const selectAlbumIds = () =>
+export const selectAlbums = () =>
   createSelector(
     (state) => state.entities.photos.list,
     (photos) => {
-      let albums = [];
+      const albumIds = [];
       for (let i = 0; i < photos.length; i++) {
         const albumId = photos[i].albumId;
-        if (!albums.includes(albumId)) albums.push(albumId);
+        if (!albumIds.includes(albumId)) albumIds.push(albumId);
+      }
+
+      const albums = albumIds.map((id) => ({
+        id,
+        photos: [],
+      }));
+
+      for (let i = 0; i < photos.length; i++) {
+        const albumIndex = albums.findIndex(
+          (album) => album.id === photos[i].albumId
+        );
+
+        albums[albumIndex].photos.push(photos[i]);
       }
       return albums;
     }
