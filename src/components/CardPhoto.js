@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { addFavouritePhoto } from "../store/photos";
+import FavoriteIcon from "@mui/icons-material/FavoriteBorder";
+import FavouriteFullIcon from "@mui/icons-material/Favorite";
 
 export const CardPhoto = ({ photo }) => {
   const dispatch = useDispatch();
@@ -41,9 +43,8 @@ export const CardPhoto = ({ photo }) => {
           size="small"
           color="primary"
         >
-          fav
+          {photo.isLiked ? <FavouriteFullIcon /> : <FavoriteIcon />}
         </Button>
-        {photo.isLiked && "liked"}
       </CardActions>
     </Card>
   );
