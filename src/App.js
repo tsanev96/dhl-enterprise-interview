@@ -6,22 +6,25 @@ import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { AlbumPhotos } from "./components/AlbumPhotos";
 import { Header } from "./components/Header";
 import { FavouritePhotos } from "./components/FavouritePhotos";
+import { PersistGate } from "redux-persist/integration/react";
 
-const store = configureStore();
+const { store, persistor } = configureStore();
 
 const App = () => {
   return (
     <BrowserRouter>
       <Provider store={store}>
-        <div className="App">
-          <Header />
-          <Switch>
-            <Route path="/albums/:id" component={AlbumPhotos} />
-            <Route path="/albums" component={Albums} />
-            <Route path="/favourites" component={FavouritePhotos} />
-            <Route path="/" exact component={Albums} />
-          </Switch>
-        </div>
+        <PersistGate loading={null} persistor={persistor}>
+          <div className="App">
+            <Header />
+            <Switch>
+              <Route path="/albums/:id" component={AlbumPhotos} />
+              <Route path="/albums" component={Albums} />
+              <Route path="/favourites" component={FavouritePhotos} />
+              <Route path="/" exact component={Albums} />
+            </Switch>
+          </div>
+        </PersistGate>
       </Provider>
     </BrowserRouter>
   );
