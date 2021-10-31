@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { apiCallBegan } from "./api";
 import { createSelector } from "reselect";
+import moment from "moment";
 
 const url = "/photos";
 
@@ -18,6 +19,7 @@ const slice = createSlice({
     photosReceived: (photos, action) => {
       photos.list = action.payload.map((el) => ({ ...el, isLiked: false }));
       photos.loading = false;
+      photos.lastFetch = Date.now();
     },
     photosRequestedFailed: (photos, action) => {
       photos.loading = false;
@@ -43,7 +45,13 @@ const {
 
 export const photosReducer = slice.reducer;
 
-export const loadPhotos = () => (dispatch, getState) =>
+export const loadPhotos = () => (dispatch, getState) => {
+  const { lastFetch } = getState().entities.photos;
+
+  const diffInMinutes = moment().diff(moment(lastFetch), "minutes");
+
+  if (diffInMinutes < 10) return;
+
   dispatch(
     apiCallBegan({
       url,
@@ -52,6 +60,7 @@ export const loadPhotos = () => (dispatch, getState) =>
       onFail: photosRequestedFailed.type,
     })
   );
+};
 
 /* Action Creators */
 export const addFavouritePhoto = (photoId) => (dispatch, getState) => {

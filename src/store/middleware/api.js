@@ -12,6 +12,7 @@ export const api =
     const { url, onSuccess, onStart, onError, method, data } = action.payload;
 
     if (onStart) dispatch({ type: onStart });
+
     next(action);
 
     try {
@@ -21,7 +22,6 @@ export const api =
         method,
         data,
       });
-
       dispatch(actions.apiCallSuccess(response.data));
 
       if (onSuccess) dispatch({ type: onSuccess, payload: response.data });

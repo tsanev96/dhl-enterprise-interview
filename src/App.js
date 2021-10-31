@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import { Albums } from "./components/Albums";
 import configureStore from "./store/configureStore";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { AlbumPhotos } from "./components/AlbumPhotos";
 import { Header } from "./components/Header";
 import { FavouritePhotos } from "./components/FavouritePhotos";

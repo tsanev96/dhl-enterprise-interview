@@ -21,7 +21,7 @@ export const AlbumPhotos = () => {
 
   useEffect(() => {
     dispatch(loadPhotos());
-  }, []);
+  });
 
   return (
     <>
