@@ -14,14 +14,12 @@ const persistedReducer = persistReducer(persistConfig, reducer);
 
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-        // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
-      })
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
+console.log("c", composeEnhancers);
 const enhancer = composeEnhancers(
   applyMiddleware(thunk.withExtraArgument(api))
-  // other store enhancers if any
 );
 
 export default () => {
